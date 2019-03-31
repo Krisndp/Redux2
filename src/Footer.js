@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-
+import {filterMemorized, filterNeedPractice,filterShowAll} from '../redux/actionCreators'
 class Footer extends React.Component {
 
     getTextStyle(statusName){
@@ -12,20 +12,20 @@ class Footer extends React.Component {
             return {color:'white', fontSize: 12}
         }
     }
-    setFilterStatus(actionType){
-        console.log(actionType);
-        this.props.dispatch({type:actionType})
-    }
+    // setFilterStatus(actionType){
+    //     console.log(actionType);
+    //     this.props.dispatch({type:actionType})
+    // }
     render() {
         return (
             <View style={{ backgroundColor: 'brown', flex: 1, flexDirection: 'row' }}>
-                <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress = {()=> this.setFilterStatus('FILTER_SHOW_ALL')}>
+                <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress = {()=> this.props.filterShowAll()}>
                     <Text style={this.getTextStyle('SHOW_ALL')}>SHOW ALL</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress = {()=> this.setFilterStatus('FILTER_MEMORIZED')}>
+                <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress = {()=> this.props.filterMemorized()}>
                     <Text style={this.getTextStyle('MEMORIZED')}>MEMORIZED</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress = {()=> this.setFilterStatus('FILTER_NEED_PRACTICE')}>
+                <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress = {()=> this.props.filterNeedPractice()}>
                     <Text style={this.getTextStyle('NEED_PRACTICE')}>NEED_PRACTICE</Text>
                 </TouchableOpacity>
             </View>
@@ -35,4 +35,4 @@ class Footer extends React.Component {
 function mapStateToProps(state){
     return { myFilterStatus: state.filterStatus}
 }
-export default connect(mapStateToProps)(Footer);
+export default connect(mapStateToProps,{filterMemorized,filterNeedPractice,filterShowAll})(Footer);
